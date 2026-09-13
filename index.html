@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Mapeo — Carretera Puerto Peñasco · Sonoyta</title>
+<meta name="theme-color" content="#22313a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mapeo">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+
+<!-- Puntos base. Lo que se capture en la app se guarda en el dispositivo (IndexedDB) y tiene prioridad sobre esto. -->
+<script id="datos" type="application/json">
+[
+  {"id":1,"nombre":"Punto 1","lat":31.484409,"lng":-113.417108,"enlace":"https://maps.app.goo.gl/7DFNqunS6rkpCPC68","foto":"","descripcion":""},
+  {"id":2,"nombre":"Punto 2","lat":31.692123,"lng":-113.138027,"enlace":"https://maps.app.goo.gl/xixEHUBaUszadbac6","foto":"","descripcion":""},
+  {"id":3,"nombre":"Punto 3","lat":31.700832,"lng":-113.137920,"enlace":"https://maps.app.goo.gl/V3wAgFmqL5dX7YGcA","foto":"","descripcion":""},
+  {"id":4,"nombre":"Punto 4","lat":31.670799,"lng":-113.309173,"enlace":"https://maps.app.goo.gl/DMd284XgxVdwLZZV6","foto":"","descripcion":""},
+  {"id":5,"nombre":"Punto 5","lat":31.678117,"lng":-113.311328,"enlace":"https://maps.app.goo.gl/WmnT1bEYPvEHBjRN9","foto":"","descripcion":""},
+  {"id":6,"nombre":"Punto 6","lat":31.692328,"lng":-113.307243,"enlace":"https://maps.app.goo.gl/8gXdeTy3Ca6W8iXBA","foto":"","descripcion":""},
+  {"id":7,"nombre":"Punto 7","lat":31.767217,"lng":-113.264291,"enlace":"https://maps.app.goo.gl/B8avtqBQSDFyc1pE8","foto":"","descripcion":""},
+  {"id":8,"nombre":"Punto 8","lat":31.697467,"lng":-113.075111,"enlace":"https://maps.app.goo.gl/WbbaDxpzR9PuZXJo6","foto":"","descripcion":""},
+  {"id":9,"nombre":"Punto 9","lat":31.734474,"lng":-113.061395,"enlace":"https://maps.app.goo.gl/BPL1TJZMcrK4nscG9","foto":"","descripcion":""},
+  {"id":10,"nombre":"Punto 10","lat":31.751836,"lng":-113.030226,"enlace":"https://maps.app.goo.gl/TTSzd33PruShpsKb9","foto":"","descripcion":""},
+  {"id":11,"nombre":"Punto 11","lat":31.885744,"lng":-112.889507,"enlace":"https://maps.app.goo.gl/hwHk3wshHEPUjNpz7","foto":"","descripcion":""},
+  {"id":12,"nombre":"Punto 12","lat":31.832236,"lng":-112.849263,"enlace":"https://maps.app.goo.gl/dG3jifU2ivjeodnj7","foto":"","descripcion":""},
+  {"id":13,"nombre":"Punto 13 (C.P. 83590, Morelia, Son.)","lat":31.904188,"lng":-112.912583,"enlace":"https://maps.app.goo.gl/dgopFYDA43zp3ykD7","foto":"","descripcion":""}
+]
+</script>
+
+<style>
+  :root{
+    --pizarra:#22313a; --pizarra-osc:#151f26; --niebla:#eef1ef; --linea:#d5dcd8;
+    --tinta:#1e262b; --gris:#6b7680; --papel:#fbfcfb; --salvia:#4f7f6f;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:"Helvetica Neue",Helvetica,Arial,system-ui,sans-serif;color:var(--tinta);background:var(--niebla)}
+  #map{position:fixed;inset:0}
+
+  /* barra superior flotante */
+  .barra{position:fixed;top:calc(12px + env(safe-area-inset-top));left:12px;right:12px;z-index:1000;display:flex;align-items:center;gap:10px;pointer-events:none}
+  .titulo{pointer-events:auto;background:var(--pizarra);color:#fff;padding:10px 16px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.25);line-height:1.15}
+  .titulo b{display:block;font-weight:500;font-size:15px}
+  .titulo span{font-size:12px;opacity:.8}
+  .acciones-mapa{pointer-events:auto;margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  button{font:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  button:hover{background:var(--niebla)}
+  button.primario{background:var(--pizarra);color:#fff;border-color:var(--pizarra)}
+  button.primario:hover{background:var(--pizarra-osc)}
+  button:focus-visible{outline:2px solid var(--salvia);outline-offset:2px}
+
+  /* fichas rápidas inferiores */
+  .fichas{position:fixed;left:0;right:0;bottom:calc(12px + env(safe-area-inset-bottom));z-index:1000;display:flex;gap:6px;overflow-x:auto;padding:4px 12px;scrollbar-width:none}
+  .fichas::-webkit-scrollbar{display:none}
+  .ficha{flex-shrink:0;width:38px;height:38px;border-radius:50%;border:2px solid #fff;background:var(--pizarra);color:#fff;font-weight:600;font-size:13px;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.25);cursor:pointer}
+  .ficha.confoto{background:var(--salvia)}
+  .ficha.activa{transform:scale(1.15);outline:2px solid var(--pizarra)}
+
+  /* marcador */
+  .marcador{width:32px;height:32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:var(--pizarra);border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);display:grid;place-items:center;transition:transform .15s}
+  .marcador.confoto{background:var(--salvia)}
+  .marcador span{transform:rotate(45deg);color:#fff;font-size:12px;font-weight:700}
+  .leaflet-marker-icon:hover .marcador{transform:rotate(-45deg) scale(1.12)}
+
+  /* tarjeta sobre el punto */
+  .leaflet-popup-content-wrapper{border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.28);padding:0;overflow:hidden;background:var(--papel)}
+  .leaflet-popup-content{margin:0;width:300px!important;font-family:inherit;line-height:1.4}
+  .leaflet-popup-tip{background:var(--papel)}
+  .leaflet-popup-close-button{top:6px!important;right:6px!important;width:28px!important;height:28px!important;border-radius:50%;background:rgba(0,0,0,.45)!important;color:#fff!important;font-size:18px!important;line-height:28px!important;z-index:2}
+  .tarjeta .foto{width:100%;height:190px;object-fit:cover;display:block;background:var(--niebla)}
+  .tarjeta .sinfoto{height:110px;display:grid;place-items:center;background:var(--niebla);color:var(--gris);font-size:13px;cursor:pointer}
+  .tarjeta .sinfoto:hover{background:var(--linea)}
+  .tarjeta .cuerpo{padding:14px 16px 16px}
+  .tarjeta h3{margin:0 0 2px;font-size:16px;font-weight:600;color:var(--pizarra)}
+  .tarjeta .meta{font-size:12px;color:var(--gris);margin-bottom:8px}
+  .tarjeta .meta a{color:var(--salvia)}
+  .tarjeta p{margin:0;font-size:14px;white-space:pre-wrap}
+  .tarjeta p.vacia{color:var(--gris);font-style:italic}
+  .tarjeta .pie{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .tarjeta label{display:block;font-size:12px;color:var(--gris);margin:8px 0 3px}
+  .tarjeta input[type=text],.tarjeta textarea{width:100%;font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--linea);border-radius:6px;background:#fff}
+  .tarjeta textarea{min-height:90px;resize:vertical}
+
+  .leyenda{position:fixed;right:12px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:1000;background:var(--papel);border:1px solid var(--linea);border-radius:8px;padding:6px 10px;font-size:12px;color:var(--gris);display:flex;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+  .leyenda i{display:inline-block;width:22px;height:4px;border-radius:2px;background:#e0912f}
+  .aviso{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:1100}
+  .aviso.ver{opacity:1}
+  @media (max-width:640px){
+    .titulo span{display:none}
+    .leaflet-popup-content{width:260px!important}
+    .tarjeta .foto{height:160px}
+    .leaflet-top.leaflet-left{top:calc(64px + env(safe-area-inset-top))}
+  }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="barra">
+  <div class="titulo"><b>Mapeo de ubicaciones</b><span>Carretera Puerto Peñasco · Sonoyta</span></div>
+  <div class="acciones-mapa">
+    <button id="btnSat">Satélite</button>
+    <button id="btnAjustar">Ver todos</button>
+    <button id="btnImportar" title="Cargar un respaldo .json">Importar</button>
+    <button class="primario" id="btnExportar" title="Descarga un respaldo .json con todo lo capturado">Respaldo</button>
+    <input type="file" id="archImportar" accept="application/json" hidden>
+    <input type="file" id="archFoto" accept="image/*" hidden>
+  </div>
+</div>
+<div class="leyenda"><i></i>Carretera Fed. 8 Peñasco – Sonoyta</div>
+<div class="fichas" id="fichas"></div>
+<div class="aviso" id="aviso"></div>
+
+<script>
+const base = JSON.parse(document.getElementById('datos').textContent);
+const puntos = base.map(p=>({...p}));
+let activo = null, editando = null;
+
+// ---- Guardado automático en el dispositivo (IndexedDB) ----
+const db = {
+  abrir(){ return new Promise((ok,err)=>{ const r=indexedDB.open('mapeo',1); r.onupgradeneeded=()=>r.result.createObjectStore('kv'); r.onsuccess=()=>ok(r.result); r.onerror=()=>err(r.error); }); },
+  async get(k){ const d=await this.abrir(); return new Promise((ok,err)=>{ const r=d.transaction('kv').objectStore('kv').get(k); r.onsuccess=()=>ok(r.result); r.onerror=()=>err(r.error); }); },
+  async set(k,v){ const d=await this.abrir(); return new Promise((ok,err)=>{ const t=d.transaction('kv','readwrite'); t.objectStore('kv').put(v,k); t.oncomplete=()=>ok(); t.onerror=()=>err(t.error); }); }
+};
+async function persistir(){ try{ await db.set('puntos', puntos); }catch(e){ aviso('No se pudo guardar en el dispositivo.'); } }
+async function cargarGuardado(){
+  try{ const g = await db.get('puntos'); if(!Array.isArray(g)) return;
+    g.forEach(d=>{ const p=puntos.find(x=>x.id===d.id); if(p) Object.assign(p,{nombre:d.nombre,descripcion:d.descripcion,foto:d.foto}); });
+  }catch(e){}
+}
+
+const map = L.map('map',{zoomControl:true});
+const calles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Esri, HERE, Garmin, FAO, NOAA, USGS'});
+const satelite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Esri, Maxar, Earthstar Geographics'});
+calles.addTo(map);
+let enSatelite = false;
+
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const urlFoto = p => !p.foto ? '' : (/^(data:|https?:\/\/)/.test(p.foto) ? p.foto : 'fotos/'+p.foto);
+const icono = p => L.divIcon({className:'',html:`<div class="marcador ${p.foto?'confoto':''}"><span>${p.id}</span></div>`,iconSize:[32,32],iconAnchor:[16,32],popupAnchor:[0,-30]});
+
+function vistaTarjeta(p){
+  const f = urlFoto(p);
+  return `<div class="tarjeta" data-id="${p.id}">
+    ${f?`<img class="foto" src="${f}" alt="">`:`<div class="sinfoto" data-accion="foto">Tocar para agregar foto</div>`}
+    <div class="cuerpo">
+      <h3>${esc(p.nombre)}</h3>
+      <div class="meta">Punto ${p.id} · ${p.lat.toFixed(5)}, ${p.lng.toFixed(5)} · <a href="${p.enlace}" target="_blank" rel="noopener">Google Maps</a></div>
+      ${p.descripcion?`<p>${esc(p.descripcion)}</p>`:`<p class="vacia">Sin descripción todavía.</p>`}
+      <div class="pie"><button class="primario" data-accion="editar">Editar</button></div>
+    </div></div>`;
+}
+function edicionTarjeta(p){
+  const f = urlFoto(p);
+  return `<div class="tarjeta" data-id="${p.id}">
+    ${f?`<img class="foto" src="${f}" alt="">`:`<div class="sinfoto" data-accion="foto">Tocar para agregar foto</div>`}
+    <div class="cuerpo">
+      <label>Nombre del sitio</label><input type="text" id="fNombre" value="${esc(p.nombre)}">
+      <label>Descripción</label><textarea id="fDesc">${esc(p.descripcion)}</textarea>
+      <label>Foto (archivo en fotos/ o URL)</label><input type="text" id="fFoto" value="${esc(p.foto.startsWith('data:')?'(imagen incrustada)':p.foto)}">
+      <div class="pie">
+        <button class="primario" data-accion="guardar">Guardar</button>
+        <button data-accion="foto">Elegir foto</button>
+        ${p.foto?'<button data-accion="quitarfoto">Quitar foto</button>':''}
+        <button data-accion="cancelar">Cancelar</button>
+      </div>
+    </div></div>`;
+}
+
+const marcadores = {};
+puntos.forEach(p=>{
+  const m = L.marker([p.lat,p.lng],{icon:icono(p)}).addTo(map).bindPopup(()=>editando===p.id?edicionTarjeta(p):vistaTarjeta(p),{maxWidth:320,minWidth:260,autoPanPadding:[20,80]});
+  m.on('popupopen',()=>{activo=p.id;pintarFichas();});
+  m.on('popupclose',()=>{if(activo===p.id){activo=null;editando=null;pintarFichas();}});
+  marcadores[p.id]=m;
+});
+// ---- Carretera Puerto Peñasco – Sonoyta (Fed. 8) ----
+const capaRuta = L.layerGroup().addTo(map);
+function dibujarRuta(coords){
+  capaRuta.clearLayers();
+  L.polyline(coords,{color:'#1e262b',weight:9,opacity:.35,lineCap:'round'}).addTo(capaRuta);
+  L.polyline(coords,{color:'#e0912f',weight:5,opacity:.95,lineCap:'round'}).addTo(capaRuta);
+  Object.values(marcadores).forEach(m=>m.setZIndexOffset(1000));
+}
+async function cargarRuta(){
+  try{ const g = await db.get('ruta'); if(Array.isArray(g)&&g.length){ dibujarRuta(g); return; } }catch(e){}
+  try{
+    const r = await fetch('https://router.project-osrm.org/route/v1/driving/-113.5385,31.3165;-112.8512,31.8618?overview=full&geometries=geojson');
+    const j = await r.json();
+    const coords = j.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
+    dibujarRuta(coords); db.set('ruta',coords).catch(()=>{});
+  }catch(e){
+    // Sin conexión y sin ruta guardada: trazo aproximado por los puntos conocidos.
+    const aprox = [[31.3165,-113.5385],[31.484409,-113.417108],[31.670799,-113.309173],[31.692328,-113.307243],[31.700832,-113.137920],[31.697467,-113.075111],[31.751836,-113.030226],[31.832236,-112.849263],[31.8618,-112.8512]];
+    dibujarRuta(aprox);
+  }
+}
+cargarRuta();
+
+const grupo = L.featureGroup(Object.values(marcadores));
+map.fitBounds(grupo.getBounds().pad(0.08));
+
+// Acciones dentro de la tarjeta (delegación de eventos)
+document.addEventListener('click',e=>{
+  const el = e.target.closest('[data-accion]'); if(!el) return;
+  const t = el.closest('.tarjeta'); if(!t) return;
+  const p = puntos.find(x=>x.id===+t.dataset.id); const m = marcadores[p.id];
+  switch(el.dataset.accion){
+    case 'editar': editando=p.id; m.setPopupContent(edicionTarjeta(p)); break;
+    case 'cancelar': editando=null; m.setPopupContent(vistaTarjeta(p)); break;
+    case 'guardar':
+      p.nombre = t.querySelector('#fNombre').value.trim() || `Punto ${p.id}`;
+      p.descripcion = t.querySelector('#fDesc').value.trim();
+      const vf = t.querySelector('#fFoto').value.trim();
+      if(vf!=='(imagen incrustada)') p.foto = vf;
+      editando=null; refrescar(p); persistir(); aviso('Guardado en este dispositivo.'); break;
+    case 'foto':
+      const inp = document.getElementById('archFoto'); inp.dataset.id = p.id; inp.value=''; inp.click(); break;
+    case 'quitarfoto': p.foto=''; refrescar(p); persistir(); break;
+  }
+});
+document.getElementById('archFoto').onchange = e=>{
+  const file = e.target.files[0]; if(!file) return;
+  const p = puntos.find(x=>x.id===+e.target.dataset.id);
+  redimensionar(file,1400,d=>{ p.foto=d; refrescar(p); persistir(); aviso('Foto guardada en este dispositivo.'); });
+};
+function refrescar(p){
+  marcadores[p.id].setIcon(icono(p)).setPopupContent(editando===p.id?edicionTarjeta(p):vistaTarjeta(p));
+  pintarFichas();
+}
+function redimensionar(file,maxLado,cb){
+  const img = new Image();
+  img.onload = ()=>{
+    const k = Math.min(1,maxLado/Math.max(img.width,img.height));
+    const c = document.createElement('canvas'); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k);
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+    cb(c.toDataURL('image/jpeg',0.82)); URL.revokeObjectURL(img.src);
+  };
+  img.src = URL.createObjectURL(file);
+}
+
+function pintarFichas(){
+  const c = document.getElementById('fichas'); c.innerHTML='';
+  puntos.forEach(p=>{
+    const d = document.createElement('div');
+    d.className = `ficha ${p.foto?'confoto':''} ${activo===p.id?'activa':''}`;
+    d.textContent = p.id; d.title = p.nombre;
+    d.onclick = ()=>{ map.flyTo([p.lat,p.lng],Math.max(map.getZoom(),15),{duration:.6}); setTimeout(()=>marcadores[p.id].openPopup(),650); };
+    c.appendChild(d);
+  });
+}
+
+function descargar(nombre,contenido,tipo){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([contenido],{type:tipo})); a.download=nombre; a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+}
+function aviso(t){ const a=document.getElementById('aviso'); a.textContent=t; a.classList.add('ver'); setTimeout(()=>a.classList.remove('ver'),2800); }
+
+document.getElementById('btnSat').onclick = ()=>{
+  enSatelite=!enSatelite;
+  if(enSatelite){map.removeLayer(calles);satelite.addTo(map);}else{map.removeLayer(satelite);calles.addTo(map);}
+  document.getElementById('btnSat').textContent = enSatelite?'Calles':'Satélite';
+};
+document.getElementById('btnAjustar').onclick = ()=>{map.closePopup();map.fitBounds(grupo.getBounds().pad(0.08));};
+document.getElementById('btnExportar').onclick = ()=>{
+  descargar(`mapeo_respaldo_${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(puntos,null,1), 'application/json');
+  aviso('Respaldo descargado.');
+};
+document.getElementById('btnImportar').onclick = ()=>document.getElementById('archImportar').click();
+document.getElementById('archImportar').onchange = e=>{
+  const file=e.target.files[0]; if(!file) return;
+  file.text().then(txt=>{
+    JSON.parse(txt).forEach(d=>{const p=puntos.find(x=>x.id===d.id); if(p){Object.assign(p,{nombre:d.nombre,descripcion:d.descripcion,foto:d.foto});refrescar(p);}});
+    persistir(); aviso('Datos importados y guardados.');
+  }).catch(()=>aviso('No se pudo leer el archivo.'));
+};
+cargarGuardado().then(()=>{ puntos.forEach(p=>marcadores[p.id].setIcon(icono(p)).setPopupContent(vistaTarjeta(p))); pintarFichas(); });
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Mapeo — Carretera Puerto Peñasco · Sonoyta",
+  "short_name": "Mapeo",
+  "description": "Mapa interactivo de ubicaciones con fotos y descripciones",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#eef1ef",
+  "theme_color": "#22313a",
+  "lang": "es",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

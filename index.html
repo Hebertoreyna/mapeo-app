@@ -17,19 +17,19 @@
 <!-- Puntos base. Lo que se capture en la app se guarda en el dispositivo (IndexedDB) y tiene prioridad sobre esto. -->
 <script id="datos" type="application/json">
 [
-  {"id": 1, "nombre": "Pozo Agua Zarca", "lat": 31.484409, "lng": -113.417108, "enlace": "https://maps.app.goo.gl/7DFNqunS6rkpCPC68", "foto": "", "descripcion": "Km 76+500, a 1 km de la carretera. Identificado por el croquis y la localidad Agua Zarca (31.487, -113.427).", "tipo": "pozo"},
-  {"id": 2, "nombre": "Banco de materiales km 34+000", "lat": 31.692123, "lng": -113.138027, "enlace": "https://maps.app.goo.gl/xixEHUBaUszadbac6", "foto": "", "descripcion": "Km 34+000 (croquis). Banco de extracción de piedra. Asignación por posición (sur del par 2-3); confirmar en campo.", "tipo": "banco"},
-  {"id": 3, "nombre": "Pozo Ejido Huavarichi", "lat": 31.700832, "lng": -113.13792, "enlace": "https://maps.app.goo.gl/V3wAgFmqL5dX7YGcA", "foto": "", "descripcion": "1 km al norte del banco km 34 (croquis). Asignación por posición; confirmar en campo.", "tipo": "pozo"},
-  {"id": 4, "nombre": "Banco de materiales Ejido Nayarit", "lat": 31.670799, "lng": -113.309173, "enlace": "https://maps.app.goo.gl/DMd284XgxVdwLZZV6", "foto": "", "descripcion": "Km 54, lado sur de la carretera. Material para subrasante y terraplén (croquis). Asignación por posición; confirmar.", "tipo": "banco"},
-  {"id": 5, "nombre": "Pozo Los Norteños #1", "lat": 31.678117, "lng": -113.311328, "enlace": "https://maps.app.goo.gl/WmnT1bEYPvEHBjRN9", "foto": "", "descripcion": "Km 54+000, junto a la carretera. Localidad Los Norteños en 31.6806, -113.3017.", "tipo": "pozo"},
-  {"id": 6, "nombre": "Pozo Los Norteños #2", "lat": 31.692328, "lng": -113.307243, "enlace": "https://maps.app.goo.gl/8gXdeTy3Ca6W8iXBA", "foto": "", "descripcion": "1 km al norte de Los Norteños #1 (croquis).", "tipo": "pozo"},
-  {"id": 7, "nombre": "Pozo Punta Peñasco", "lat": 31.767217, "lng": -113.264291, "enlace": "https://maps.app.goo.gl/B8avtqBQSDFyc1pE8", "foto": "", "descripcion": "7.5 km al norte de la carretera desde el km 48+700 (croquis).", "tipo": "pozo"},
-  {"id": 8, "nombre": "Pozo El Chamizal", "lat": 31.697467, "lng": -113.075111, "enlace": "https://maps.app.goo.gl/WbbaDxpzR9PuZXJo6", "foto": "", "descripcion": "3.5 km del banco km 34, a 500 m de la carretera (croquis). Asignación probable.", "tipo": "pozo"},
-  {"id": 9, "nombre": "Pozo km 29+000", "lat": 31.734474, "lng": -113.061395, "enlace": "https://maps.app.goo.gl/BPL1TJZMcrK4nscG9", "foto": "", "descripcion": "A 500 m de la carretera (croquis).", "tipo": "pozo"},
-  {"id": 10, "nombre": "Banco de materiales km 23+000", "lat": 31.751836, "lng": -113.030226, "enlace": "https://maps.app.goo.gl/TTSzd33PruShpsKb9", "foto": "", "descripcion": "Km 23+000, a 500 m de la carretera. Banco de extracción de piedra (confirmado por Heberto).", "tipo": "banco"},
-  {"id": 11, "nombre": "Pozo sin identificar (NO de Sonoyta)", "lat": 31.885744, "lng": -112.889507, "enlace": "https://maps.app.goo.gl/hwHk3wshHEPUjNpz7", "foto": "", "descripcion": "No aparece en el croquis. 2.6 km al noroeste de Sonoyta, rumbo a Pápagos. Confirmar con Herme.", "tipo": "pozo"},
-  {"id": 12, "nombre": "Pozo km 4+000 (Sonoyta)", "lat": 31.832236, "lng": -112.849263, "enlace": "https://maps.app.goo.gl/dG3jifU2ivjeodnj7", "foto": "", "descripcion": "Entrada sur de Sonoyta (croquis).", "tipo": "pozo"},
-  {"id": 13, "nombre": "Pozo sin identificar (C.P. 83590)", "lat": 31.904188, "lng": -112.912583, "enlace": "https://maps.app.goo.gl/dgopFYDA43zp3ykD7", "foto": "", "descripcion": "No aparece en el croquis. 7 km al noroeste de Sonoyta, rumbo a Pápagos. Confirmar con Herme.", "tipo": "pozo"}
+  {"id": 1, "nombre": "Pozo km 76+500", "tipo": "pozo", "lat": 31.484409, "lng": -113.417108, "enlace": "https://maps.app.goo.gl/7DFNqunS6rkpCPC68", "km": "Km 76+500", "dist_eje": "1 km", "referencia": "Agua Zarca", "uso": "Fuente ordinaria", "calidad": "", "notas": "Próximo a Peñasco y al casco urbano.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 2, "nombre": "Banco km 34+000", "tipo": "banco", "lat": 31.692123, "lng": -113.138027, "enlace": "https://maps.app.goo.gl/xixEHUBaUszadbac6", "km": "Km 34+000", "dist_eje": "Sobre el trazo (0.1 km)", "referencia": "Ejido Huivérachi", "uso": "Cubre el tercio norte (km 6 a 44)", "calidad": "En proceso de estudio de laboratorio; primeros análisis determinaron la calidad necesaria.", "notas": "Material para subrasante y terraplén. En las proximidades se ubica el pozo El Chamizal.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 3, "nombre": "Pozo Ejido Huivérachi", "tipo": "pozo", "lat": 31.700832, "lng": -113.13792, "enlace": "https://maps.app.goo.gl/V3wAgFmqL5dX7YGcA", "km": "Km 34+000 (1 km al norte)", "dist_eje": "1 km", "referencia": "Ejido Huivérachi", "uso": "Fuente ordinaria", "calidad": "", "notas": "Aparece en el croquis a 1 km del banco km 34; no está listado en el planteamiento.", "en_plan": false, "foto": "", "descripcion": ""},
+  {"id": 4, "nombre": "Banco Ejido Nayarit", "tipo": "banco", "lat": 31.670799, "lng": -113.309173, "enlace": "https://maps.app.goo.gl/DMd284XgxVdwLZZV6", "km": "Km 54+000", "dist_eje": "Contiguo al eje", "referencia": "Ejido Nayarit · sector Los Norteños", "uso": "Cubre el centro y el sur (km 44 a 94)", "calidad": "", "notas": "Material para subrasante y terraplén. Coexiste con los pozos Los Norteños No. 1 y No. 2.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 5, "nombre": "Pozo Los Norteños No. 1", "tipo": "pozo", "lat": 31.678117, "lng": -113.311328, "enlace": "https://maps.app.goo.gl/WmnT1bEYPvEHBjRN9", "km": "Km 54+000", "dist_eje": "Contiguo al eje", "referencia": "Zona del banco Ejido Nayarit", "uso": "Fuente ordinaria · ventaja logística", "calidad": "", "notas": "", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 6, "nombre": "Pozo Los Norteños No. 2", "tipo": "pozo", "lat": 31.692328, "lng": -113.307243, "enlace": "https://maps.app.goo.gl/8gXdeTy3Ca6W8iXBA", "km": "Km 54+000", "dist_eje": "Aprox. 1 km", "referencia": "Sector Los Norteños", "uso": "Fuente alterna del mismo sector", "calidad": "", "notas": "Garantiza abastecimiento.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 7, "nombre": "Pozo Punta Peñasco (río)", "tipo": "pozo", "lat": 31.767217, "lng": -113.264291, "enlace": "https://maps.app.goo.gl/B8avtqBQSDFyc1pE8", "km": "Km 48+700", "dist_eje": "7.5 km", "referencia": "Cauce del Río Sonoyta", "uso": "Reserva · no entra en la operación diaria", "calidad": "", "notas": "Pozo sobre cauce del Río Sonoyta.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 8, "nombre": "Pozo El Chamizal", "tipo": "pozo", "lat": 31.697467, "lng": -113.075111, "enlace": "https://maps.app.goo.gl/WbbaDxpzR9PuZXJo6", "km": "Km 23 a 34", "dist_eje": "3.5 km / 1,500 m", "referencia": "Ejido Huivérachi", "uso": "Fuente ordinaria", "calidad": "", "notas": "", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 9, "nombre": "Pozo km 29+000", "tipo": "pozo", "lat": 31.734474, "lng": -113.061395, "enlace": "https://maps.app.goo.gl/BPL1TJZMcrK4nscG9", "km": "Km 29+000", "dist_eje": "500 m", "referencia": "—", "uso": "Sin asignar", "calidad": "", "notas": "Aparece en el croquis; no está listado en el planteamiento.", "en_plan": false, "foto": "", "descripcion": ""},
+  {"id": 10, "nombre": "Banco km 19+200", "tipo": "banco", "lat": 31.751836, "lng": -113.030226, "enlace": "https://maps.app.goo.gl/TTSzd33PruShpsKb9", "km": "Km 19+200", "dist_eje": "Sobre el trazo (0.1 km)", "referencia": "Ejido Chamizal", "uso": "Banco listado en inventario", "calidad": "", "notas": "Material para subrasante y terraplén. Extracción de piedra confirmada.", "en_plan": true, "foto": "", "descripcion": ""},
+  {"id": 11, "nombre": "Pozo sin identificar (NO de Sonoyta)", "tipo": "pozo", "lat": 31.885744, "lng": -112.889507, "enlace": "https://maps.app.goo.gl/hwHk3wshHEPUjNpz7", "km": "Fuera del corredor", "dist_eje": "—", "referencia": "2.6 km al NO de Sonoyta", "uso": "Sin asignar", "calidad": "", "notas": "No aparece en el croquis ni en el planteamiento. Confirmar.", "en_plan": false, "foto": "", "descripcion": ""},
+  {"id": 12, "nombre": "Pozo km 4+000", "tipo": "pozo", "lat": 31.832236, "lng": -112.849263, "enlace": "https://maps.app.goo.gl/dG3jifU2ivjeodnj7", "km": "Km 4+000", "dist_eje": "—", "referencia": "Entrada sur de Sonoyta", "uso": "Sin asignar", "calidad": "", "notas": "Aparece en el croquis; no está listado en el planteamiento.", "en_plan": false, "foto": "", "descripcion": ""},
+  {"id": 13, "nombre": "Pozo sin identificar (C.P. 83590)", "tipo": "pozo", "lat": 31.904188, "lng": -112.912583, "enlace": "https://maps.app.goo.gl/dgopFYDA43zp3ykD7", "km": "Fuera del corredor", "dist_eje": "—", "referencia": "7 km al NO de Sonoyta", "uso": "Sin asignar", "calidad": "", "notas": "No aparece en el croquis ni en el planteamiento. Confirmar.", "en_plan": false, "foto": "", "descripcion": ""}
 ]
 </script>
 
@@ -48,9 +48,11 @@
   .titulo b{display:block;font-weight:500;font-size:15px}
   .titulo span{font-size:12px;opacity:.8}
   .acciones-mapa{pointer-events:auto;margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  select{font:inherit;font-size:13px;padding:8px 10px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta);box-shadow:0 2px 8px rgba(0,0,0,.12)}
   button{font:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
   button:hover{background:var(--niebla)}
   button.primario{background:var(--pizarra);color:#fff;border-color:var(--pizarra)}
+  button.activo{background:var(--salvia);color:#fff;border-color:var(--salvia)}
   button.primario:hover{background:var(--pizarra-osc)}
   button:focus-visible{outline:2px solid var(--salvia);outline-offset:2px}
 
@@ -84,6 +86,10 @@
   .tarjeta p{margin:0;font-size:14px;white-space:pre-wrap}
   .tarjeta p.vacia{color:var(--gris);font-style:italic}
   .tarjeta .pie{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:10px;color:#fff;margin:2px 4px 2px 0}
+  .chip.pozo{background:var(--agua)} .chip.banco{background:var(--piedra)} .chip.fuera{background:var(--gris)}
+  .datos{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:6px 0 8px;font-size:12.5px}
+  .datos dt{color:var(--gris)} .datos dd{margin:0;color:var(--tinta)} .datos a{color:var(--salvia)}
   .tarjeta label{display:block;font-size:12px;color:var(--gris);margin:8px 0 3px}
   .tarjeta input[type=text],.tarjeta textarea{width:100%;font:inherit;font-size:14px;padding:7px 9px;border:1px solid var(--linea);border-radius:6px;background:#fff}
   .tarjeta textarea{min-height:90px;resize:vertical}
@@ -92,6 +98,12 @@
   .leyenda i{display:inline-block;width:22px;height:4px;border-radius:2px;background:#e0912f}
   .leyenda b{display:inline-block;width:10px;height:10px;border-radius:50%;margin-left:8px}
   .leyenda b.agua{background:var(--agua)} .leyenda b.piedra{background:var(--piedra)}
+  .panel{position:fixed;top:calc(64px + env(safe-area-inset-top));right:12px;width:min(380px,calc(100vw - 24px));max-height:calc(100vh - 160px);overflow-y:auto;z-index:1001;background:var(--papel);border:1px solid var(--linea);border-radius:12px;padding:16px 18px;box-shadow:0 8px 28px rgba(0,0,0,.25);font-size:13px;line-height:1.45}
+  .panel h2{margin:0 24px 2px 0;font-size:16px;font-weight:600;color:var(--pizarra)} .panel h3{margin:12px 0 4px;font-size:13px;color:var(--pizarra)}
+  .panel .sub{color:var(--gris);font-size:12px;margin:0 0 8px} .panel p{margin:6px 0} .panel ol{margin:4px 0 0 18px;padding:0}
+  .panel table{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:4px} .panel table a{color:var(--salvia);font-weight:600} .panel th,.panel td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--linea)} .panel th{color:var(--gris);font-weight:500}
+  .panel .cerrar{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;padding:0;font-size:18px;line-height:1;box-shadow:none}
+  .leyenda .seg{display:inline-block;width:14px;height:6px;border-radius:2px;margin-left:8px}
   .aviso{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:1100}
   .aviso.ver{opacity:1}
   @media (max-width:640px){
@@ -108,6 +120,14 @@
 <div class="barra">
   <div class="titulo"><b>Mapeo de ubicaciones</b><span>Carretera Puerto Peñasco · Sonoyta</span></div>
   <div class="acciones-mapa">
+    <select id="filtro" title="Filtrar puntos">
+      <option value="todos">Todos los puntos</option>
+      <option value="plan">Solo el planteamiento</option>
+      <option value="pozo">Solo pozos</option>
+      <option value="banco">Solo bancos</option>
+    </select>
+    <button id="btnAcarreo" title="Mostrar qué banco cubre cada tramo de obra">Acarreo</button>
+    <button id="btnInfo" title="Resumen del ofrecimiento">Ofrecimiento</button>
     <button id="btnSat">Satélite</button>
     <button id="btnAjustar">Ver todos</button>
     <button id="btnImportar" title="Cargar un respaldo .json">Importar</button>
@@ -116,7 +136,44 @@
     <input type="file" id="archFoto" accept="image/*" hidden>
   </div>
 </div>
-<div class="leyenda"><i></i>Fed. 8 <b class="agua"></b>Pozo de agua <b class="piedra"></b>Banco de materiales</div>
+<div class="panel" id="panelInfo" hidden>
+  <button class="cerrar" id="cerrarInfo" aria-label="Cerrar">×</button>
+  <h2>Planteamiento de ofrecimiento</h2>
+  <p class="sub">Bancos de materiales y suministro de agua para la construcción</p>
+  <p>Se ponen a disposición de la residencia de obra y del contratista bancos de materiales sobre el corredor (km 19+200, 34+000 y 54+000) y seis pozos de agua entre el km 23 y el km 76+500, con desvíos de 400 m a 7.5 km. Los de 1.5 km o menos pueden considerarse fuente ordinaria; el de 7.5 km queda como reserva.</p>
+  <h3>Inventario de bancos de materiales</h3>
+  <table>
+    <tr><th>Km</th><th>Referencia</th><th>Calidad</th><th>Ficha</th></tr>
+    <tr><td>54+000</td><td>Ejido Nayarit · contiguo al eje</td><td>—</td><td><a href="#" data-ir="4">4</a></td></tr>
+    <tr><td>34+000</td><td>Ejido Huivérachi · 0.1 km</td><td>En estudio de laboratorio; primeros análisis con calidad necesaria</td><td><a href="#" data-ir="2">2</a></td></tr>
+    <tr><td>19+200</td><td>Ejido Chamizal · 0.1 km</td><td>—</td><td><a href="#" data-ir="10">10</a></td></tr>
+  </table>
+  <h3>Inventario de pozos de agua</h3>
+  <table>
+    <tr><th>Km</th><th>Pozo</th><th>Dist. eje</th><th>Uso</th><th>Ficha</th></tr>
+    <tr><td>23–34</td><td>El Chamizal</td><td>3.5 km / 1,500 m <sup>(1)</sup></td><td>Ordinaria</td><td><a href="#" data-ir="8">8</a></td></tr>
+    <tr><td>48+700</td><td>Punta Peñasco (río)</td><td>7.5 km</td><td>Reserva</td><td><a href="#" data-ir="7">7</a></td></tr>
+    <tr><td>54+000</td><td>Los Norteños No. 1</td><td>Contiguo</td><td>Ordinaria</td><td><a href="#" data-ir="5">5</a></td></tr>
+    <tr><td>54+000</td><td>Los Norteños No. 2</td><td>~1 km</td><td>Alterna</td><td><a href="#" data-ir="6">6</a></td></tr>
+    <tr><td>62+700</td><td>Los Corrales</td><td>400 m</td><td>Ordinaria</td><td>—</td></tr>
+    <tr><td>76+500</td><td>Pozo km 76+500</td><td>1 km</td><td>Ordinaria</td><td><a href="#" data-ir="1">1</a></td></tr>
+  </table>
+  <p class="sub">Uso: Ordinaria = desvío ≤ 1.5 km, operación diaria · Alterna = respaldo del sector · Reserva = fuera de la operación diaria.<br>(1) Cifras tal como aparecen en el planteamiento; falta precisar cuál es por camino y cuál en línea recta.</p>
+  <h3>Acarreo por tramo de obra</h3>
+  <table>
+    <tr><th>Tramo</th><th>Banco</th><th>Acarreo máx.</th></tr>
+    <tr><td>Km 6 – 23</td><td>Km 34+000</td><td>28 km + acceso</td></tr>
+    <tr><td>Km 23 – 44</td><td>Km 34+000</td><td>0 – 10 km + acceso</td></tr>
+    <tr><td>Km 44 – 58</td><td>Nayarit km 54+000</td><td>0 – 10 km + acceso</td></tr>
+    <tr><td>Km 58 – 70</td><td>Nayarit km 54+000</td><td>4 – 16 km + acceso</td></tr>
+    <tr><td>Km 70 – 94</td><td>Nayarit km 54+000</td><td>16 – 40 km + acceso</td></tr>
+  </table>
+  <p>Lectura práctica: el banco del km 34 cubre el norte; el banco del Ejido Nayarit cubre el centro y el sur. El agua no debe viajar el mismo recorrido que el material: en cada frente se abre el pozo más próximo. El pozo de Punta Peñasco (7.5 km) no entra en la operación diaria.</p>
+  <h3>Ventajas de uso</h3>
+  <ol><li>Disminución en distancia de acarreo.</li><li>Garantía en calidad de material.</li><li>Garantía en caudal y calidad del agua.</li><li>Capacidad de producción y continuidad.</li><li>Garantía en participación social.</li><li>Certeza legal.</li></ol>
+  <p class="sub">Sitio pendiente de georreferenciar: pozo Los Corrales, km 62+700, 400 m del eje (zona Agua Zarca).</p>
+</div>
+<div class="leyenda" id="leyenda"><i></i>Fed. 8 <b class="agua"></b>Pozo <b class="piedra"></b>Banco<span id="leyAcarreo" hidden> · Acarreo: <span class="seg" style="background:#7a4b8f"></span>banco km 34 <span class="seg" style="background:#c2792a"></span>banco Nayarit</span></div>
 <div class="fichas" id="fichas"></div>
 <div class="aviso" id="aviso"></div>
 
@@ -134,7 +191,7 @@ const db = {
 async function persistir(){ try{ await db.set('puntos', puntos); }catch(e){ aviso('No se pudo guardar en el dispositivo.'); } }
 async function cargarGuardado(){
   try{ const g = await db.get('puntos'); if(!Array.isArray(g)) return;
-    g.forEach(d=>{ const p=puntos.find(x=>x.id===d.id); if(p) Object.assign(p,{nombre:d.nombre,descripcion:d.descripcion,foto:d.foto}); });
+    g.forEach(d=>{ const p=puntos.find(x=>x.id===d.id); if(p){ p.descripcion=d.descripcion||''; p.foto=d.foto||''; if(d.nombreEditado){ p.nombre=d.nombre; p.nombreEditado=true; } } });
   }catch(e){}
 }
 
@@ -154,8 +211,17 @@ function vistaTarjeta(p){
     ${f?`<img class="foto" src="${f}" alt="">`:`<div class="sinfoto" data-accion="foto">Tocar para agregar foto</div>`}
     <div class="cuerpo">
       <h3>${esc(p.nombre)}</h3>
-      <div class="meta">Punto ${p.id} · ${p.tipo==='banco'?'Banco de materiales':'Pozo de agua'} · ${p.lat.toFixed(5)}, ${p.lng.toFixed(5)} · <a href="${p.enlace}" target="_blank" rel="noopener">Google Maps</a></div>
-      ${p.descripcion?`<p>${esc(p.descripcion)}</p>`:`<p class="vacia">Sin descripción todavía.</p>`}
+      <div class="meta"><span class="chip ${p.tipo}">${p.tipo==='banco'?'Banco de materiales':'Pozo de agua'}</span>${p.en_plan?'':'<span class="chip fuera">No incluido en el planteamiento</span>'}</div>
+      <dl class="datos">
+        <dt>Cadenamiento</dt><dd>${esc(p.km)}</dd>
+        <dt>Distancia al eje</dt><dd>${esc(p.dist_eje)}</dd>
+        <dt>Referencia</dt><dd>${esc(p.referencia)}</dd>
+        <dt>Uso</dt><dd>${esc(p.uso)}</dd>
+        ${p.calidad?`<dt>Calidad</dt><dd>${esc(p.calidad)}</dd>`:''}
+        ${p.notas?`<dt>Notas</dt><dd>${esc(p.notas)}</dd>`:''}
+        <dt>Coordenadas</dt><dd>${p.lat.toFixed(6)}, ${p.lng.toFixed(6)} · <a href="${p.enlace}" target="_blank" rel="noopener">Google Maps</a></dd>
+      </dl>
+      ${p.descripcion?`<p>${esc(p.descripcion)}</p>`:`<p class="vacia">Sin observaciones de campo todavía.</p>`}
       <div class="pie"><button class="primario" data-accion="editar">Editar</button></div>
     </div></div>`;
 }
@@ -165,7 +231,7 @@ function edicionTarjeta(p){
     ${f?`<img class="foto" src="${f}" alt="">`:`<div class="sinfoto" data-accion="foto">Tocar para agregar foto</div>`}
     <div class="cuerpo">
       <label>Nombre del sitio</label><input type="text" id="fNombre" value="${esc(p.nombre)}">
-      <label>Descripción</label><textarea id="fDesc">${esc(p.descripcion)}</textarea>
+      <label>Observaciones de campo</label><textarea id="fDesc">${esc(p.descripcion)}</textarea>
       <label>Foto (archivo en fotos/ o URL)</label><input type="text" id="fFoto" value="${esc(p.foto.startsWith('data:')?'(imagen incrustada)':p.foto)}">
       <div class="pie">
         <button class="primario" data-accion="guardar">Guardar</button>
@@ -192,19 +258,37 @@ function dibujarRuta(coords){
   Object.values(marcadores).forEach(m=>m.setZIndexOffset(1000));
 }
 async function cargarRuta(){
-  try{ const g = await db.get('ruta'); if(Array.isArray(g)&&g.length){ dibujarRuta(g); return; } }catch(e){}
+  try{ const g = await db.get('ruta'); if(Array.isArray(g)&&g.length){ rutaCoords=g; dibujarRuta(g); return; } }catch(e){}
   try{
     const r = await fetch('https://router.project-osrm.org/route/v1/driving/-113.5385,31.3165;-112.8512,31.8618?overview=full&geometries=geojson');
     const j = await r.json();
     const coords = j.routes[0].geometry.coordinates.map(c=>[c[1],c[0]]);
-    dibujarRuta(coords); db.set('ruta',coords).catch(()=>{});
+    rutaCoords=coords; dibujarRuta(coords); db.set('ruta',coords).catch(()=>{});
   }catch(e){
     // Sin conexión y sin ruta guardada: trazo aproximado por los puntos conocidos.
     const aprox = [[31.3165,-113.5385],[31.484409,-113.417108],[31.670799,-113.309173],[31.692328,-113.307243],[31.700832,-113.137920],[31.697467,-113.075111],[31.751836,-113.030226],[31.832236,-112.849263],[31.8618,-112.8512]];
-    dibujarRuta(aprox);
+    rutaCoords=aprox; dibujarRuta(aprox);
   }
 }
 cargarRuta();
+
+// ---- Cobertura de acarreo: km 0 en Sonoyta, creciente hacia Peñasco ----
+let capaAcarreo = null, rutaCoords = null;
+const TRAMOS = [[6,44,'#7a4b8f','Banco km 34+000'],[44,94,'#c2792a','Banco Ejido Nayarit km 54+000']];
+function hav(a,b){const R=6371,dLa=(b[0]-a[0])*Math.PI/180,dLo=(b[1]-a[1])*Math.PI/180,x=Math.sin(dLa/2)**2+Math.cos(a[0]*Math.PI/180)*Math.cos(b[0]*Math.PI/180)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(x));}
+function dibujarAcarreo(){
+  if(!rutaCoords) return;
+  capaAcarreo = L.layerGroup();
+  // coords van de Peñasco a Sonoyta; cadenamiento desde Sonoyta
+  const c = rutaCoords.slice().reverse(); const km=[0];
+  for(let i=1;i<c.length;i++) km.push(km[i-1]+hav(c[i-1],c[i]));
+  TRAMOS.forEach(([a,b,col,nom])=>{
+    const seg = c.filter((_,i)=>km[i]>=a&&km[i]<=b);
+    if(seg.length>1) L.polyline(seg,{color:col,weight:11,opacity:.45,lineCap:'butt'}).bindTooltip(`${nom} · km ${a}–${b}`,{sticky:true}).addTo(capaAcarreo);
+    const im = c.findIndex((_,i)=>km[i]>=(a+b)/2);
+    if(im>0) L.marker(c[im],{icon:L.divIcon({className:'',html:`<div style="background:${col};color:#fff;font-size:11px;padding:2px 7px;border-radius:9px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3)">${nom.replace('Banco ','')}</div>`,iconAnchor:[-8,10]}),interactive:false}).addTo(capaAcarreo);
+  });
+}
 
 const grupo = L.featureGroup(Object.values(marcadores));
 map.fitBounds(grupo.getBounds().pad(0.08));
@@ -218,7 +302,7 @@ document.addEventListener('click',e=>{
     case 'editar': editando=p.id; m.setPopupContent(edicionTarjeta(p)); break;
     case 'cancelar': editando=null; m.setPopupContent(vistaTarjeta(p)); break;
     case 'guardar':
-      p.nombre = t.querySelector('#fNombre').value.trim() || `Punto ${p.id}`;
+      const nn = t.querySelector('#fNombre').value.trim() || `Punto ${p.id}`; if(nn!==p.nombre){ p.nombre=nn; p.nombreEditado=true; }
       p.descripcion = t.querySelector('#fDesc').value.trim();
       const vf = t.querySelector('#fFoto').value.trim();
       if(vf!=='(imagen incrustada)') p.foto = vf;
@@ -251,6 +335,7 @@ function redimensionar(file,maxLado,cb){
 function pintarFichas(){
   const c = document.getElementById('fichas'); c.innerHTML='';
   puntos.forEach(p=>{
+    if(!map.hasLayer(marcadores[p.id])) return;
     const d = document.createElement('div');
     d.className = `ficha ${p.tipo||''} ${p.foto?'confoto':''} ${activo===p.id?'activa':''}`;
     d.textContent = p.id; d.title = p.nombre;
@@ -270,6 +355,29 @@ document.getElementById('btnSat').onclick = ()=>{
   if(enSatelite){map.removeLayer(calles);satelite.addTo(map);}else{map.removeLayer(satelite);calles.addTo(map);}
   document.getElementById('btnSat').textContent = enSatelite?'Calles':'Satélite';
 };
+document.getElementById('btnAcarreo').onclick = e=>{
+  if(capaAcarreo && map.hasLayer(capaAcarreo)){ map.removeLayer(capaAcarreo); e.target.classList.remove('activo'); document.getElementById('leyAcarreo').hidden=true; return; }
+  if(!capaAcarreo) dibujarAcarreo();
+  if(!capaAcarreo){ aviso('La carretera aún no carga.'); return; }
+  capaAcarreo.addTo(map); e.target.classList.add('activo'); document.getElementById('leyAcarreo').hidden=false;
+};
+document.getElementById('btnInfo').onclick = ()=>{ const p=document.getElementById('panelInfo'); p.hidden=!p.hidden; };
+document.getElementById('cerrarInfo').onclick = ()=>document.getElementById('panelInfo').hidden=true;
+document.getElementById('panelInfo').addEventListener('click', e=>{
+  const a=e.target.closest('[data-ir]'); if(!a) return; e.preventDefault();
+  const id=+a.dataset.ir, p=puntos.find(x=>x.id===id);
+  document.getElementById('panelInfo').hidden=true;
+  if(!map.hasLayer(marcadores[id])) marcadores[id].addTo(map);
+  map.flyTo([p.lat,p.lng],Math.max(map.getZoom(),15),{duration:.6}); setTimeout(()=>marcadores[id].openPopup(),650);
+});
+document.getElementById('filtro').onchange = e=>{
+  const v=e.target.value;
+  puntos.forEach(p=>{
+    const ver = v==='todos' || (v==='plan'&&p.en_plan) || v===p.tipo;
+    if(ver){ if(!map.hasLayer(marcadores[p.id])) marcadores[p.id].addTo(map); } else { map.removeLayer(marcadores[p.id]); }
+  });
+  pintarFichas();
+};
 document.getElementById('btnAjustar').onclick = ()=>{map.closePopup();map.fitBounds(grupo.getBounds().pad(0.08));};
 document.getElementById('btnExportar').onclick = ()=>{
   descargar(`mapeo_respaldo_${new Date().toISOString().slice(0,10)}.json`, JSON.stringify(puntos,null,1), 'application/json');
@@ -279,7 +387,7 @@ document.getElementById('btnImportar').onclick = ()=>document.getElementById('ar
 document.getElementById('archImportar').onchange = e=>{
   const file=e.target.files[0]; if(!file) return;
   file.text().then(txt=>{
-    JSON.parse(txt).forEach(d=>{const p=puntos.find(x=>x.id===d.id); if(p){Object.assign(p,{nombre:d.nombre,descripcion:d.descripcion,foto:d.foto});refrescar(p);}});
+    JSON.parse(txt).forEach(d=>{const p=puntos.find(x=>x.id===d.id); if(p){ p.descripcion=d.descripcion||''; p.foto=d.foto||''; if(d.nombreEditado){p.nombre=d.nombre;p.nombreEditado=true;} refrescar(p);}});
     persistir(); aviso('Datos importados y guardados.');
   }).catch(()=>aviso('No se pudo leer el archivo.'));
 };

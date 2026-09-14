@@ -1,5 +1,5 @@
 // Service worker: la app funciona sin conexión y guarda los mosaicos del mapa que ya se hayan visto.
-const VERSION = 'mapeo-v10';
+const VERSION = 'mapeo-v11';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js'];
 const TILES = 'mapeo-tiles';
 const MAX_TILES = 4000;

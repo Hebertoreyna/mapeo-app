@@ -1,6 +1,6 @@
 // Service worker: la app funciona sin conexión y guarda los mosaicos del mapa que ya se hayan visto.
-const VERSION = 'mapeo-v4';
-const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'];
+const VERSION = 'mapeo-v5';
+const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js', 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js'];
 const TILES = 'mapeo-tiles';
 const MAX_TILES = 4000;
 
@@ -21,7 +21,7 @@ self.addEventListener('fetch', e => {
     }));
     return;
   }
-  if (url.origin === location.origin || url.hostname === 'unpkg.com') {
+  if (url.origin === location.origin || url.hostname === 'unpkg.com' || url.hostname === 'www.gstatic.com') {
     // Archivos de la app: red primero (para recibir actualizaciones), caché si no hay conexión.
     e.respondWith(fetch(e.request).then(r => { caches.open(VERSION).then(c => c.put(e.request, r.clone())); return r; }).catch(() => caches.match(e.request)));
   }

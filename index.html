@@ -13,6 +13,9 @@
 <link rel="icon" href="icon-192.png">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
 
 <!-- Puntos base. Lo que se capture en la app se guarda en el dispositivo (IndexedDB) y tiene prioridad sobre esto. -->
 <script id="datos" type="application/json">
@@ -47,6 +50,7 @@
   .titulo{pointer-events:auto;background:var(--pizarra);color:#fff;padding:10px 16px;border-radius:10px;box-shadow:0 4px 14px rgba(0,0,0,.25);line-height:1.15}
   .titulo b{display:block;font-weight:500;font-size:15px}
   .titulo span{font-size:12px;opacity:.8}
+  .titulo em{display:block;font-style:normal;font-size:11px;opacity:.75;margin-top:2px} .titulo em.ok{color:#9fd8c3} .titulo em.err{color:#f3b3a6}
   .acciones-mapa{pointer-events:auto;margin-left:auto;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
   select{font:inherit;font-size:13px;padding:8px 10px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta);box-shadow:0 2px 8px rgba(0,0,0,.12)}
   button{font:inherit;font-size:13px;padding:8px 12px;border-radius:8px;border:1px solid var(--linea);background:var(--papel);color:var(--tinta);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.12)}
@@ -118,7 +122,7 @@
 <div id="map"></div>
 
 <div class="barra">
-  <div class="titulo"><b>Mapeo de ubicaciones</b><span>Carretera Puerto Peñasco · Sonoyta</span></div>
+  <div class="titulo"><b>Mapeo de ubicaciones</b><span>Carretera Puerto Peñasco · Sonoyta</span><em id="sync" title="Estado de la base compartida">● conectando…</em></div>
   <div class="acciones-mapa">
     <select id="filtro" title="Filtrar puntos">
       <option value="todos">Todos los puntos</option>
@@ -188,7 +192,36 @@ const db = {
   async get(k){ const d=await this.abrir(); return new Promise((ok,err)=>{ const r=d.transaction('kv').objectStore('kv').get(k); r.onsuccess=()=>ok(r.result); r.onerror=()=>err(r.error); }); },
   async set(k,v){ const d=await this.abrir(); return new Promise((ok,err)=>{ const t=d.transaction('kv','readwrite'); t.objectStore('kv').put(v,k); t.oncomplete=()=>ok(); t.onerror=()=>err(t.error); }); }
 };
-async function persistir(){ try{ await db.set('puntos', puntos); }catch(e){ aviso('No se pudo guardar en el dispositivo.'); } }
+// ---- Base compartida (Firebase / Firestore) ----
+const firebaseConfig = { apiKey:"AIzaSyCfa7CgKe5eezAEOKIZ5iw0ty23sINYA-I", authDomain:"mapeo-37501.firebaseapp.com", projectId:"mapeo-37501", storageBucket:"mapeo-37501.firebasestorage.app", messagingSenderId:"890087771972", appId:"1:890087771972:web:b91daea148e9e20066d111" };
+let fs=null, fsListo=false;
+function setSync(txt,cls){ const e=document.getElementById('sync'); if(e){ e.textContent='● '+txt; e.className=cls||''; } }
+async function iniciarNube(){
+  try{
+    firebase.initializeApp(firebaseConfig);
+    fs = firebase.firestore();
+    try{ await fs.enablePersistence({synchronizeTabs:true}); }catch(e){}
+    await firebase.auth().signInAnonymously();
+    fs.collection('puntos').onSnapshot(snap=>{
+      snap.docChanges().forEach(ch=>{
+        const d=ch.doc.data(); const p=puntos.find(x=>x.id===+ch.doc.id); if(!p) return;
+        p.descripcion=d.descripcion||''; p.foto=d.foto||'';
+        if(d.nombreEditado){ p.nombre=d.nombre; p.nombreEditado=true; }
+        if(marcadores[p.id] && editando!==p.id) refrescar(p);
+      });
+      fsListo=true; setSync(snap.metadata.fromCache?'sin conexión · datos guardados':'base compartida al día','ok');
+    }, err=>{ setSync('sin acceso a la base compartida','err'); console.warn(err); });
+  }catch(e){ setSync('solo en este dispositivo','err'); console.warn(e); }
+}
+async function persistir(p){
+  try{ await db.set('puntos', puntos); }catch(e){}
+  if(fs && p){
+    try{
+      await fs.collection('puntos').doc(String(p.id)).set({nombre:p.nombre, nombreEditado:!!p.nombreEditado, descripcion:p.descripcion||'', foto:p.foto||'', actualizado:firebase.firestore.FieldValue.serverTimestamp()});
+      setSync('base compartida al día','ok');
+    }catch(e){ setSync('cambio pendiente de subir','err'); }
+  }
+}
 async function cargarGuardado(){
   try{ const g = await db.get('puntos'); if(!Array.isArray(g)) return;
     g.forEach(d=>{ const p=puntos.find(x=>x.id===d.id); if(p){ p.descripcion=d.descripcion||''; p.foto=d.foto||''; if(d.nombreEditado){ p.nombre=d.nombre; p.nombreEditado=true; } } });
@@ -306,16 +339,16 @@ document.addEventListener('click',e=>{
       p.descripcion = t.querySelector('#fDesc').value.trim();
       const vf = t.querySelector('#fFoto').value.trim();
       if(vf!=='(imagen incrustada)') p.foto = vf;
-      editando=null; refrescar(p); persistir(); aviso('Guardado en este dispositivo.'); break;
+      editando=null; refrescar(p); persistir(p); aviso(fs?'Guardado y compartido.':'Guardado en este dispositivo.'); break;
     case 'foto':
       const inp = document.getElementById('archFoto'); inp.dataset.id = p.id; inp.value=''; inp.click(); break;
-    case 'quitarfoto': p.foto=''; refrescar(p); persistir(); break;
+    case 'quitarfoto': p.foto=''; refrescar(p); persistir(p); break;
   }
 });
 document.getElementById('archFoto').onchange = e=>{
   const file = e.target.files[0]; if(!file) return;
   const p = puntos.find(x=>x.id===+e.target.dataset.id);
-  redimensionar(file,1400,d=>{ p.foto=d; refrescar(p); persistir(); aviso('Foto guardada en este dispositivo.'); });
+  redimensionar(file,1000,d=>{ p.foto=d; refrescar(p); persistir(p); aviso(fs?'Foto guardada y compartida.':'Foto guardada en este dispositivo.'); });
 };
 function refrescar(p){
   marcadores[p.id].setIcon(icono(p)).setPopupContent(editando===p.id?edicionTarjeta(p):vistaTarjeta(p));
@@ -327,7 +360,7 @@ function redimensionar(file,maxLado,cb){
     const k = Math.min(1,maxLado/Math.max(img.width,img.height));
     const c = document.createElement('canvas'); c.width=Math.round(img.width*k); c.height=Math.round(img.height*k);
     c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-    cb(c.toDataURL('image/jpeg',0.82)); URL.revokeObjectURL(img.src);
+    cb(c.toDataURL('image/jpeg',0.72)); URL.revokeObjectURL(img.src);
   };
   img.src = URL.createObjectURL(file);
 }
@@ -387,11 +420,11 @@ document.getElementById('btnImportar').onclick = ()=>document.getElementById('ar
 document.getElementById('archImportar').onchange = e=>{
   const file=e.target.files[0]; if(!file) return;
   file.text().then(txt=>{
-    JSON.parse(txt).forEach(d=>{const p=puntos.find(x=>x.id===d.id); if(p){ p.descripcion=d.descripcion||''; p.foto=d.foto||''; if(d.nombreEditado){p.nombre=d.nombre;p.nombreEditado=true;} refrescar(p);}});
-    persistir(); aviso('Datos importados y guardados.');
+    JSON.parse(txt).forEach(d=>{const p=puntos.find(x=>x.id===d.id); if(p){ p.descripcion=d.descripcion||''; p.foto=d.foto||''; if(d.nombreEditado){p.nombre=d.nombre;p.nombreEditado=true;} refrescar(p); persistir(p);}});
+    aviso('Datos importados y compartidos.');
   }).catch(()=>aviso('No se pudo leer el archivo.'));
 };
-cargarGuardado().then(()=>{ puntos.forEach(p=>marcadores[p.id].setIcon(icono(p)).setPopupContent(vistaTarjeta(p))); pintarFichas(); });
+cargarGuardado().then(()=>{ puntos.forEach(p=>marcadores[p.id].setIcon(icono(p)).setPopupContent(vistaTarjeta(p))); pintarFichas(); iniciarNube(); });
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
 </script>
 </body>

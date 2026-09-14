@@ -19,7 +19,7 @@ En Android: abrir en Chrome → menú ⋮ → *Instalar aplicación*.
 ## Uso
 
 - Toque un marcador para ver su tarjeta; **Editar** para capturar nombre, descripción y foto. Los puntos con foto se muestran en verde.
-- Los cambios se guardan solos en ese dispositivo. **Respaldo** descarga un `.json` con todo; **Importar** lo carga en otro dispositivo.
+- Los cambios (nombre, observaciones, fotos) se guardan en la **base compartida** (Firebase Firestore, proyecto `mapeo-37501`): todos los dispositivos ven lo mismo. Si no hay señal, se guardan en el teléfono y se suben al reconectar. **Respaldo** descarga un `.json`; **Importar** lo sube a la base.
 - **Satélite** cambia la vista. Los mosaicos que ya se vieron quedan guardados para consultarlos sin señal.
 
 ## Actualizar los puntos base

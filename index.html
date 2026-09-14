@@ -107,6 +107,7 @@
   .panel .sub{color:var(--gris);font-size:12px;margin:0 0 8px} .panel p{margin:6px 0} .panel ol{margin:4px 0 0 18px;padding:0}
   .panel table{width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:4px} .panel table a{color:var(--salvia);font-weight:600} .panel th,.panel td{text-align:left;padding:4px 6px;border-bottom:1px solid var(--linea)} .panel th{color:var(--gris);font-weight:500}
   .panel .cerrar{position:absolute;top:8px;right:8px;width:28px;height:28px;border-radius:50%;padding:0;font-size:18px;line-height:1;box-shadow:none}
+  .etq-acarreo{width:auto!important;height:auto!important;white-space:nowrap} .etq-acarreo span{display:inline-block;color:#fff;font-size:12px;font-weight:600;padding:3px 9px;border-radius:10px;box-shadow:0 1px 4px rgba(0,0,0,.35);border:1.5px solid #fff}
   .leyenda .seg{display:inline-block;width:14px;height:6px;border-radius:2px;margin-left:8px}
   .aviso{position:fixed;left:50%;top:70px;transform:translateX(-50%);background:var(--tinta);color:#fff;padding:9px 16px;border-radius:8px;font-size:13px;opacity:0;transition:opacity .25s;pointer-events:none;z-index:1100}
   .aviso.ver{opacity:1}
@@ -319,7 +320,7 @@ function dibujarAcarreo(){
     const seg = c.filter((_,i)=>km[i]>=a&&km[i]<=b);
     if(seg.length>1) L.polyline(seg,{color:col,weight:11,opacity:.45,lineCap:'butt'}).bindTooltip(`${nom} · km ${a}–${b}`,{sticky:true}).addTo(capaAcarreo);
     const im = c.findIndex((_,i)=>km[i]>=(a+b)/2);
-    if(im>0) L.marker(c[im],{icon:L.divIcon({className:'',html:`<div style="background:${col};color:#fff;font-size:11px;padding:2px 7px;border-radius:9px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.3)">${nom.replace('Banco ','')}</div>`,iconAnchor:[-8,10]}),interactive:false}).addTo(capaAcarreo);
+    if(im>0) L.marker(c[im],{icon:L.divIcon({className:'etq-acarreo',html:`<span style="background:${col}">${nom.replace('Banco ','')} · km ${a}–${b}</span>`,iconSize:null,iconAnchor:[-10,12]}),interactive:false}).addTo(capaAcarreo);
   });
 }
 
